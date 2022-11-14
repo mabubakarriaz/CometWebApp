@@ -1,0 +1,55 @@
+# A test workflow it will be changed to Dev & stage & prod once the steps are reviewed and approved.
+
+name: test-CI-win
+
+on:
+  push:
+    branches: 
+      - main
+      # - test-pipeline
+      # - Feature-DriverUtilities
+      # - Dev
+      # - Staging
+  pull_request:
+    branches:
+      - main
+
+  # manually run from the Actions tab
+  workflow_dispatch: 
+
+jobs:
+  # build the dotnet codebase
+  job-1:
+    name: Dotnet Job
+    runs-on: windows-2019
+
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v3
+        with:
+          ref: main
+
+      - name: Install Dotnet
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: 7.0.x
+          # dotnet-quality: 'preview'
+
+      - name: Install msbuild
+        uses: microsoft/setup-msbuild@v1.1      
+
+      - name: Restore proj
+        run: msbuild /t:Restore /p:RestoreAdditionalProjectFallbackFolders="" "src\Comet.UI\Comet.UI.csproj"
+      
+      - name: Build proj
+        run: msbuild "src\Comet.UI\Comet.UI.csproj" -property:Configuration=Release
+
+      - name: Status
+        run: |
+          Get-ChildItem -Path Env:
+          dotnet --info
+
+      #- name: Status
+      #  run: |
+      #    Get-ChildItem -Path Env: | Out-File -FilePath bin\x86\Release\env.txt
+      #    dotnet --info | Out-File -FilePath bin\x86\Release\dotnet-info.txt
