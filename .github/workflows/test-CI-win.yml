@@ -44,6 +44,9 @@ jobs:
       - name: Build proj
         run: msbuild "src\Comet.UI\Comet.UI.csproj" -property:Configuration=Release
 
+      - name: Run Tests proj
+        run: dotnet test "src\Comet.Tests.XUnit\Comet.Tests.XUnit.csproj"
+
       - name: Status
         run: |
           Get-ChildItem -Path Env:
