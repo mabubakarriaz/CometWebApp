@@ -28,7 +28,13 @@ jobs:
         uses: actions/checkout@v3
         with:
           ref: main
-      
+
+      - name: Add msbuild to PATH
+        uses: microsoft/setup-msbuild@v1.1
+
+      - name: Build app for release
+        run: msbuild src\Comet.UI\Comet.UI.csproj -t:rebuild -verbosity:diag -property:Configuration=Release
+
       - name: Install Dotnet
         uses: actions/setup-dotnet@v3
         with:
@@ -38,7 +44,7 @@ jobs:
       - name: Environment variables
         run: "Get-ChildItem Env: | Sort-Object Name"
 
-      - name: dotnet SDK details
+      - name: dotnet info
         run: dotnet --info       
 
       - name: working directory
