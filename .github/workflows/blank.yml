@@ -1,18 +1,19 @@
 # A test workflow it will be changed to Dev & stage & prod once the steps are reviewed and approved.
 
-name: test-CI
+name: test-CI-win
 
 on:
   push:
     branches: [ "main" ]
+    # branches: [ "test-pipeline", "Feature-DriverUtilities", "Dev", "Staging" ]
 
   # manually run from the Actions tab
   workflow_dispatch:
 
 jobs:
   # build the dotnet codebase
-  job-build:
-    name: dotnet
+  job-1:
+    name: dotnet-build
     runs-on: windows-2022
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
@@ -21,7 +22,7 @@ jobs:
     - name: Setup .NET
       uses: actions/setup-dotnet@v3
       with:
-        dotnet-version: 6.0.x
+        dotnet-version: 7.0.0-rc.2
     
     - name: Restore dependencies
       run: dotnet restore
