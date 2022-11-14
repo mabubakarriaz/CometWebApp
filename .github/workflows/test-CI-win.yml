@@ -40,15 +40,8 @@ jobs:
 
       - name: Status
         run: |
-          "Get-ChildItem Env: | Sort-Object Name"
-          dotnet --info 
-          ls 
-          
-      #- name: dotnet info
-      #  run: dotnet --info       
-
-      #- name: working directory
-      #  run: ls           
+          Get-ChildItem -Path Env: | Out-File env.txt
+          dotnet --info | Out-File dotnet-info.txt       
 
       - name: Restore
         run: msbuild /t:Restore /p:RestoreAdditionalProjectFallbackFolders="" "src\Comet.UI\Comet.UI.csproj"
