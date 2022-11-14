@@ -4,9 +4,12 @@ name: test-CI-win
 
 on:
   push:
-    branches: [ "main" ]
-    # uncomment this
-    # branches: [ "test-pipeline", "Feature-DriverUtilities", "Dev", "Staging" ]  
+    branches: 
+      - main
+      # - test-pipeline
+      # - Feature-DriverUtilities
+      # - Dev
+      # - Staging
 
   # manually run from the Actions tab
   workflow_dispatch: 
@@ -29,7 +32,7 @@ jobs:
       - name: Environment variables
         run: "Get-ChildItem Env: | Sort-Object Name"
 
-      - name: dotnet info
+      - name: dotnet SDK details
         run: dotnet --info       
 
       - name: Restore dependencies
