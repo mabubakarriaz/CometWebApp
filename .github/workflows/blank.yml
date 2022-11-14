@@ -1,5 +1,5 @@
 # A test workflow it will be changed to Dev & stage & prod once the steps are reviewed and approved.
-# --------------------------------------------------------------------------------------------------
+
 name: test-CI-win
 
 on:
@@ -19,12 +19,16 @@ jobs:
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v3
+
+      - name: Environment variables
         run: "Get-ChildItem Env: Sort-Object Name"
       
       - name: Install Dotnet
         uses: actions/setup-dotnet@v3
         with:
           dotnet-version: 7.0.x
+
+      - name: Environment variables
         run: "Get-ChildItem Env: Sort-Object Name"
 
       - name: Restore dependencies
