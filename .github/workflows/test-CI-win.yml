@@ -35,7 +35,7 @@ jobs:
           dotnet-version: 7.0.x
           # dotnet-quality: 'preview'
 
-      - name: Add msbuild to PATH
+      - name: Install msbuild
         uses: microsoft/setup-msbuild@v1.1
 
       - name: Environment variables
@@ -52,12 +52,6 @@ jobs:
       
       - name: MS Build app for release
         run: msbuild src\Comet.UI\Comet.UI.csproj -property:Configuration=Release
-
-      - name: dotnet Restore dependencies
-        run: dotnet restore src\Comet.UI\Comet.UI.csproj
-    
-      - name: dotnet Build
-        run: dotnet build src\Comet.UI\Comet.UI.csproj --no-restore
       
       - name: Test
         run: dotnet test --no-build --verbosity normal
