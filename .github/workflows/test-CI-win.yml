@@ -47,16 +47,16 @@ jobs:
       - name: working directory
         run: ls           
 
-      - name: Build app for release
+      - name: MS Build Restore app
         run: msbuild /t:Restore /p:RestoreAdditionalProjectFallbackFolders="" "src\Comet.UI\Comet.UI.csproj"
       
-      - name: Build app for release
+      - name: MS Build app for release
         run: msbuild src\Comet.UI\Comet.UI.csproj -property:Configuration=Release
 
-      - name: Restore dependencies
+      - name: dotnet Restore dependencies
         run: dotnet restore src\Comet.UI\Comet.UI.csproj
     
-      - name: Build
+      - name: dotnet Build
         run: dotnet build src\Comet.UI\Comet.UI.csproj --no-restore
       
       - name: Test
