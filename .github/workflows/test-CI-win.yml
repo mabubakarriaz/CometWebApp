@@ -20,9 +20,6 @@ jobs:
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v3
-
-      - name: Environment variables
-        run: "Get-ChildItem Env: | Sort-Object Name"
       
       - name: Install Dotnet
         uses: actions/setup-dotnet@v3
@@ -31,6 +28,9 @@ jobs:
 
       - name: Environment variables
         run: "Get-ChildItem Env: | Sort-Object Name"
+
+      - name: dotnet info
+        run: dotnet --info       
 
       - name: Restore dependencies
         run: dotnet restore
