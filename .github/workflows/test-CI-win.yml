@@ -45,10 +45,10 @@ jobs:
         run: ls           
 
       - name: Restore dependencies
-        run: dotnet restore
+        run: dotnet restore src\Comet.UI\Comet.UI.csproj
     
       - name: Build
-        run: dotnet build --no-restore
+        run: dotnet build src\Comet.UI\Comet.UI.csproj --no-restore
       
       - name: Test
         run: dotnet test --no-build --verbosity normal
