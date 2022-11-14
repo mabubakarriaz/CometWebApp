@@ -47,6 +47,9 @@ jobs:
       - name: working directory
         run: ls           
 
+      - name: Build app for release
+        run: msbuild.exe /t:Restore /p:RestoreAdditionalProjectFallbackFolders=""
+      
       #- name: Build app for release
       #  run: msbuild src\Comet.UI\Comet.UI.csproj -property:Configuration=Release
 
