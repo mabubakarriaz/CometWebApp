@@ -21,7 +21,7 @@ jobs:
   # build the dotnet codebase
   job-1:
     name: Dotnet Job
-    runs-on: windows-2022
+    runs-on: windows-2019
 
     steps:
       - name: Checkout Repo
@@ -48,10 +48,10 @@ jobs:
         run: ls           
 
       - name: Build app for release
-        run: msbuild.exe /t:Restore /p:RestoreAdditionalProjectFallbackFolders="" "src\Comet.UI\Comet.UI.csproj"
+        run: msbuild /t:Restore /p:RestoreAdditionalProjectFallbackFolders="" "src\Comet.UI\Comet.UI.csproj"
       
-      #- name: Build app for release
-      #  run: msbuild src\Comet.UI\Comet.UI.csproj -property:Configuration=Release
+      - name: Build app for release
+        run: msbuild src\Comet.UI\Comet.UI.csproj -property:Configuration=Release
 
       - name: Restore dependencies
         run: dotnet restore src\Comet.UI\Comet.UI.csproj
