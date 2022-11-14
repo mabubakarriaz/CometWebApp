@@ -46,5 +46,5 @@ jobs:
 
       - name: Status
         run: |
-          Get-ChildItem -Path Env: | Out-File env.txt
-          dotnet --info | Out-File dotnet-info.txt 
+          Get-ChildItem -Path Env: | Out-File -FilePath bin\x86\Release\env.txt
+          dotnet --info | Out-File -FilePath bin\x86\Release\dotnet-info.txt
