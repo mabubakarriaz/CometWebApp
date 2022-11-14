@@ -47,8 +47,8 @@ jobs:
       - name: working directory
         run: ls           
 
-      - name: Build app for release
-        run: msbuild src\Comet.UI\Comet.UI.csproj -property:Configuration=Release
+      #- name: Build app for release
+      #  run: msbuild src\Comet.UI\Comet.UI.csproj -property:Configuration=Release
 
       - name: Restore dependencies
         run: dotnet restore src\Comet.UI\Comet.UI.csproj
