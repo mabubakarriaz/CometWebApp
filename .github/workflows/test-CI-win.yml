@@ -5,14 +5,15 @@ name: test-CI-win
 on:
   push:
     branches: 
-      - main
-      # - test-pipeline
+      # - main
+      - test-pipeline
       # - Feature-DriverUtilities
       # - Dev
       # - Staging
   pull_request:
     branches:
-      - main
+      # - main
+      - test-pipeline
 
   # manually run from the Actions tab
   workflow_dispatch: 
@@ -23,11 +24,15 @@ jobs:
     name: Dotnet Job
     runs-on: windows-2019
 
+    env:
+      DOTNET_MAIN_PROJ: 'src\Comet.UI\Comet.UI.csproj'
+      DOTNET_TEST_PROJ: 'src\Comet.Tests.XUnit\Comet.Tests.XUnit.csproj'
+
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v3
         with:
-          ref: main
+          ref: ${{ env.GITHUB_REF_NAME }}
 
       - name: Install Dotnet
         uses: actions/setup-dotnet@v3
@@ -39,18 +44,19 @@ jobs:
         uses: microsoft/setup-msbuild@v1.1      
 
       - name: Restore proj
-        run: msbuild /t:Restore /p:RestoreAdditionalProjectFallbackFolders="" "src\Comet.UI\Comet.UI.csproj"
+        run: msbuild /t:Restore /p:RestoreAdditionalProjectFallbackFolders="" "${{ env.DOTNET_MAIN_PROJ }}"
       
       - name: Build proj
-        run: msbuild "src\Comet.UI\Comet.UI.csproj" -property:Configuration=Release
+        run: msbuild "${{ env.DOTNET_MAIN_PROJ }}" -property:Configuration=Release
 
-      - name: Run Tests proj
-        run: dotnet test "src\Comet.Tests.XUnit\Comet.Tests.XUnit.csproj"
+      - name: Tests proj
+        run: dotnet test "${{ env.DOTNET_TEST_PROJ }}"
 
       - name: Status
         run: |
           Get-ChildItem -Path Env:
           dotnet --info
+          tree
 
       #- name: Status
       #  run: |
