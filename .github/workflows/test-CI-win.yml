@@ -5,15 +5,15 @@ name: test-CI-win
 on:
   push:
     branches: 
-      # - main
-      - test-pipeline
+      - main
+      # - test-pipeline
       # - Feature-DriverUtilities
       # - Dev
       # - Staging
   pull_request:
     branches:
-      # - main
-      - test-pipeline
+      - main
+      # - test-pipeline
 
   # manually run from the Actions tab
   workflow_dispatch: 
