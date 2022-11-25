@@ -41,10 +41,10 @@ jobs:
           # dotnet-quality: 'preview'  
 
       - name: Restore dependencies
-        run: dotnet restore "${{ env.DOTNET_TEST_PROJ }}"
+        run: dotnet restore "${{ env.DOTNET_MAIN_PROJ }}"
       
       - name: Build proj
-        run: dotnet build "${{ env.DOTNET_TEST_PROJ }}" --no-restore
+        run: dotnet build "${{ env.DOTNET_MAIN_PROJ }}" --no-restore
 
       - name: Tests proj
         run: dotnet test "${{ env.DOTNET_TEST_PROJ }}"
