@@ -32,6 +32,9 @@ jobs:
       COMET_STATUS_PATH: 'status/'
 
     steps:
+      - name: test test test test
+        run: echo ${{ env.COMET_ARTIFACT_NAME }}
+
       - name: Checkout Repo
         uses: actions/checkout@v3
         with:
