@@ -27,7 +27,7 @@ jobs:
     env:
       COMET_MAIN_PROJ: 'Iot Apps\src\Comet.Apps.ReaderConsole\Comet.Apps.ReaderConsole.csproj'
       COMET_TEST_PROJ: 'Iot Apps\src\Comet.Tests.XUnit\Comet.Tests.XUnit.csproj'
-      COMET_ARTIFACT_NAME: ReaderConsole-$RUNNER_OS-$RUNNER_ARCH
+      COMET_ARTIFACT_NAME: ReaderConsole-${{github.ref_name}}-${{runner.os}}-${{runner.arch}}
       COMET_ARTIFACT_PATH: 'Iot Apps/src/Comet.Apps.ReaderConsole/bin/debug/net7.0/'
       COMET_STATUS_PATH: 'status/'
 
