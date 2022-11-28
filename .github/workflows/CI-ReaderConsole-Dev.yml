@@ -27,7 +27,8 @@ jobs:
     env:
       COMET_MAIN_PROJ: 'Iot Apps\src\Comet.Apps.ReaderConsole\Comet.Apps.ReaderConsole.csproj'
       COMET_TEST_PROJ: 'Iot Apps\src\Comet.Tests.XUnit\Comet.Tests.XUnit.csproj'
-      COMET_ARTIFACT_NAME: 'ReaderConsole- ${{ env.RUNNER_OS }} - ${{ env.RUNNER_ARCH }} - ${{ env.GITHUB_RUN_NUMBER }}'
+      COMET_ARTIFACT_NAME: 'ReaderConsole-Windows-x64-${{ env.GITHUB_RUN_ID }}'
+      COMET_ARTIFACT_PATH: 'Iot Apps/src/Comet.Apps.ReaderConsole/bin/debug/net7.0/'
 
     steps:
       - name: Checkout Repo
