@@ -5,10 +5,10 @@ name: CI-ReaderConsole-Dev
 on:
   push:
     branches: 
-      # - main
+      - main
       # - test-pipeline
       # - Feature-DriverUtilities
-      - Dev
+      # - Dev
       # - Staging
   pull_request:
     branches:
@@ -49,21 +49,21 @@ jobs:
       - name: Tests proj
         run: dotnet test "${{ env.DOTNET_TEST_PROJ }}"
 
-      - name: Status
-        run: |
-          Get-ChildItem -Path Env:
-          dotnet --info
-          tree
-
-      - name: save artifacts
-        uses: actions/upload-artifact@v3
-        with:
-          name: ReaderConsole- ${{ env.RUNNER_OS }} - ${{ env.RUNNER_ARCH }} - ${{ env.GITHUB_RUN_NUMBER }}  
-          path: 'Iot Apps/src/Comet.Apps.ReaderConsole/bin/debug/net7.0/'
-
       - name: Status file
         run: |
           mkdir status
           Get-ChildItem -Path Env: | Out-File -FilePath status\env.txt
           dotnet --info | Out-File -FilePath status\dotnet-info.txt
           tree | Out-File -FilePath status\tree.txt
+
+      - name: save artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: ReaderConsole- ${{ env.RUNNER_OS }} - ${{ env.RUNNER_ARCH }} - ${{ env.GITHUB_RUN_NUMBER }}  
+          path: 'Iot Apps/src/Comet.Apps.ReaderConsole/bin/debug/net7.0/'
+     
+      #- name: Status
+      #  run: |
+      #    Get-ChildItem -Path Env:
+      #    dotnet --info
+      #    tree
