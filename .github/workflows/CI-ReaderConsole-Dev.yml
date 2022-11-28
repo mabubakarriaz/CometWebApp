@@ -55,6 +55,12 @@ jobs:
           dotnet --info
           tree
 
+      - name: save artifacts
+      - uses: actions/upload-artifact@v3
+        with:
+          name: ReaderConsole-${{ env.RUNNER_OS }}-${{ env.RUNNER_ARCH }}-${{ env.GITHUB_RUN_NUMBER }}  
+          path: 'Iot Apps/src/Comet.Apps.ReaderConsole/bin/debug/net7.0/'
+
       #- name: Status
       #  run: |
       #    Get-ChildItem -Path Env: | Out-File -FilePath bin\x86\Release\env.txt
