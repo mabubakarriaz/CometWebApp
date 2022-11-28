@@ -28,8 +28,8 @@ jobs:
       COMET_MAIN_PROJ: 'Iot Apps\src\Comet.Apps.ReaderConsole\Comet.Apps.ReaderConsole.csproj'
       COMET_TEST_PROJ: 'Iot Apps\src\Comet.Tests.XUnit\Comet.Tests.XUnit.csproj'
       COMET_ARTIFACT_NAME: ReaderConsole-Windows-x64-${{ github.ref_name }}
-      COMET_BUILD_PATH: 'Iot Apps/src/Comet.Apps.ReaderConsole/bin/debug/net7.0/'
-      COMET_STATUS_PATH: 'status/'
+      COMET_BUILD_PATH: 'Iot Apps/src/Comet.Apps.ReaderConsole/bin/debug/net7.0'
+      COMET_STATUS_PATH: 'Iot Apps/src/Comet.Apps.ReaderConsole/bin/debug/status'
 
     steps:
       - name: Checkout Repo
@@ -54,10 +54,10 @@ jobs:
 
       - name: Status
         run: |
-          New-Item "Status" -type Directory
-          Get-ChildItem -Path Env: | Out-File -FilePath status\env.txt
-          dotnet --info | Out-File -FilePath status\dotnet-info.txt
-          tree | Out-File -FilePath status\tree.txt
+          New-Item "${{ env.COMET_STATUS_PATH }}" -type Directory
+          Get-ChildItem -Path Env: | Out-File -FilePath "${{ env.COMET_STATUS_PATH }}/env.txt"
+          dotnet --info | Out-File -FilePath "${{ env.COMET_STATUS_PATH }}/dotnet-info.txt"
+          tree | Out-File -FilePath "${{ env.COMET_STATUS_PATH }}/tree.txt"
 
       - name: save artifacts
         uses: actions/upload-artifact@v3
