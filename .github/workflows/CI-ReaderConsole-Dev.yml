@@ -54,10 +54,10 @@ jobs:
 
       - name: Status
         run: |
-          New-Item "Iot Apps/src/Comet.Apps.ReaderConsole/bin/debug/net7.0/status/" -type Directory
-          Get-ChildItem -Path Env: | Out-File -FilePath "Iot Apps\src\Comet.Apps.ReaderConsole\bin\debug\net7.0\status\env.txt"
-          dotnet --info | Out-File -FilePath "Iot Apps\src\Comet.Apps.ReaderConsole\bin\debug\net7.0\status\dotnet-info.txt"
-          tree | Out-File -FilePath "Iot Apps\src\Comet.Apps.ReaderConsole\bin\debug\net7.0\status\tree.txt"
+          New-Item "${{ env.COMET_STATUS_PATH }}" -type Directory
+          Get-ChildItem -Path Env: | Out-File -FilePath "${{ env.COMET_STATUS_PATH }}env.txt"
+          dotnet --info | Out-File -FilePath "${{ env.COMET_STATUS_PATH }}dotnet-info.txt"
+          tree | Out-File -FilePath "${{ env.COMET_STATUS_PATH }}tree.txt"
 
       - name: save artifacts
         uses: actions/upload-artifact@v3
