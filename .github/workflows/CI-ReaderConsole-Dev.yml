@@ -27,7 +27,7 @@ jobs:
     env:
       COMET_MAIN_PROJ: 'Iot Apps\src\Comet.Apps.ReaderConsole\Comet.Apps.ReaderConsole.csproj'
       COMET_TEST_PROJ: 'Iot Apps\src\Comet.Tests.XUnit\Comet.Tests.XUnit.csproj'
-      COMET_ARTIFACT_NAME: 'ReaderConsole-$RUNNER_OS-$RUNNER_ARCH-$GITHUB_RUN_ID'
+      COMET_ARTIFACT_NAME: 'ReaderConsole-${{ RUNNER_OS }}-$RUNNER_ARCH-$GITHUB_RUN_ID'
       COMET_ARTIFACT_PATH: 'Iot Apps/src/Comet.Apps.ReaderConsole/bin/debug/net7.0/'
       COMET_STATUS_PATH: 'status/'
 
@@ -52,7 +52,7 @@ jobs:
       - name: Tests proj
         run: dotnet test "${{ env.COMET_TEST_PROJ }}" --no-restore
 
-      - name: Status file
+      - name: Status
         run: |
           New-Item "Status" -type Directory
           Get-ChildItem -Path Env: | Out-File -FilePath status\env.txt
@@ -66,9 +66,3 @@ jobs:
           path: |
             ${{ env.COMET_ARTIFACT_PATH }}
             ${{ env.COMET_STATUS_PATH }}
-     
-      - name: Status 2
-        run: |
-          Get-ChildItem -Path Env:
-          dotnet --info
-          tree
