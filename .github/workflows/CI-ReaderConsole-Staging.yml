@@ -1,6 +1,6 @@
 # A test workflow it will be changed to Dev & stage & prod once the steps are reviewed and approved.
 
-name: CI-ReaderConsole-Dev
+name: CI-ReaderConsole-Staging
 
 on:
   push:
