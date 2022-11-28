@@ -1,6 +1,6 @@
 # A test workflow it will be changed to Dev & stage & prod once the steps are reviewed and approved.
 
-name: CI-ReaderConsole-Staging
+name: CI-ReaderConsole-Dev
 
 on:
   push:
@@ -25,8 +25,11 @@ jobs:
     runs-on: windows-2019
 
     env:
-      DOTNET_MAIN_PROJ: 'Iot Apps\src\Comet.Apps.ReaderConsole\Comet.Apps.ReaderConsole.csproj'
-      DOTNET_TEST_PROJ: 'Iot Apps\src\Comet.Tests.XUnit\Comet.Tests.XUnit.csproj'
+      COMET_MAIN_PROJ: 'Iot Apps\src\Comet.Apps.ReaderConsole\Comet.Apps.ReaderConsole.csproj'
+      COMET_TEST_PROJ: 'Iot Apps\src\Comet.Tests.XUnit\Comet.Tests.XUnit.csproj'
+      COMET_ARTIFACT_NAME: ReaderConsole-Windows-x64-${{ github.ref_name }}
+      COMET_BUILD_PATH: 'Iot Apps/src/Comet.Apps.ReaderConsole/bin/debug/net7.0/'
+      COMET_STATUS_PATH: 'status/'
 
     steps:
       - name: Checkout Repo
@@ -41,21 +44,25 @@ jobs:
           # dotnet-quality: 'preview'  
 
       - name: Restore dependencies
-        run: dotnet restore "${{ env.DOTNET_MAIN_PROJ }}"
+        run: dotnet restore "${{ env.COMET_MAIN_PROJ }}"
       
       - name: Build proj
-        run: dotnet build "${{ env.DOTNET_MAIN_PROJ }}" --no-restore
+        run: dotnet build "${{ env.COMET_MAIN_PROJ }}" --no-restore
 
       - name: Tests proj
-        run: dotnet test "${{ env.DOTNET_TEST_PROJ }}"
+        run: dotnet test "${{ env.COMET_TEST_PROJ }}" --no-restore
 
       - name: Status
         run: |
-          Get-ChildItem -Path Env:
-          dotnet --info
-          tree
+          New-Item "Status" -type Directory
+          Get-ChildItem -Path Env: | Out-File -FilePath status\env.txt
+          dotnet --info | Out-File -FilePath status\dotnet-info.txt
+          tree | Out-File -FilePath status\tree.txt
 
-      #- name: Status
-      #  run: |
-      #    Get-ChildItem -Path Env: | Out-File -FilePath bin\x86\Release\env.txt
-      #    dotnet --info | Out-File -FilePath bin\x86\Release\dotnet-info.txt
+      - name: save artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: ${{ env.COMET_ARTIFACT_NAME }}
+          path: |
+            ${{ env.COMET_BUILD_PATH }}
+            ${{ env.COMET_STATUS_PATH }}

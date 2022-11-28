@@ -28,13 +28,10 @@ jobs:
       COMET_MAIN_PROJ: 'Iot Apps\src\Comet.Apps.ReaderConsole\Comet.Apps.ReaderConsole.csproj'
       COMET_TEST_PROJ: 'Iot Apps\src\Comet.Tests.XUnit\Comet.Tests.XUnit.csproj'
       COMET_ARTIFACT_NAME: ReaderConsole-Windows-x64-${{ github.ref_name }}
-      COMET_ARTIFACT_PATH: 'Iot Apps/src/Comet.Apps.ReaderConsole/bin/debug/net7.0/'
+      COMET_BUILD_PATH: 'Iot Apps/src/Comet.Apps.ReaderConsole/bin/debug/net7.0/'
       COMET_STATUS_PATH: 'status/'
 
     steps:
-      - name: test test test test
-        run: echo ${{ env.COMET_ARTIFACT_NAME }}
-
       - name: Checkout Repo
         uses: actions/checkout@v3
         with:
@@ -67,5 +64,5 @@ jobs:
         with:
           name: ${{ env.COMET_ARTIFACT_NAME }}
           path: |
-            ${{ env.COMET_ARTIFACT_PATH }}
+            ${{ env.COMET_BUILD_PATH }}
             ${{ env.COMET_STATUS_PATH }}
