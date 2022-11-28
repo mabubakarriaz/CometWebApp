@@ -25,8 +25,9 @@ jobs:
     runs-on: windows-2019
 
     env:
-      DOTNET_MAIN_PROJ: 'Iot Apps\src\Comet.Apps.ReaderConsole\Comet.Apps.ReaderConsole.csproj'
-      DOTNET_TEST_PROJ: 'Iot Apps\src\Comet.Tests.XUnit\Comet.Tests.XUnit.csproj'
+      COMET_MAIN_PROJ: 'Iot Apps\src\Comet.Apps.ReaderConsole\Comet.Apps.ReaderConsole.csproj'
+      COMET_TEST_PROJ: 'Iot Apps\src\Comet.Tests.XUnit\Comet.Tests.XUnit.csproj'
+      COMET_ARTIFACT_NAME: 'ReaderConsole- ${{ env.RUNNER_OS }} - ${{ env.RUNNER_ARCH }} - ${{ env.GITHUB_RUN_NUMBER }}'
 
     steps:
       - name: Checkout Repo
@@ -41,17 +42,17 @@ jobs:
           # dotnet-quality: 'preview'  
 
       - name: Restore dependencies
-        run: dotnet restore "${{ env.DOTNET_MAIN_PROJ }}"
+        run: dotnet restore "${{ env.COMET_MAIN_PROJ }}"
       
       - name: Build proj
-        run: dotnet build "${{ env.DOTNET_MAIN_PROJ }}" --no-restore
+        run: dotnet build "${{ env.COMET_MAIN_PROJ }}" --no-restore
 
       - name: Tests proj
-        run: dotnet test "${{ env.DOTNET_TEST_PROJ }}"
+        run: dotnet test "${{ env.COMET_TEST_PROJ }}"
 
       - name: Status file
         run: |
-          mkdir status
+          New-Item "Status" -type Directory
           Get-ChildItem -Path Env: | Out-File -FilePath status\env.txt
           dotnet --info | Out-File -FilePath status\dotnet-info.txt
           tree | Out-File -FilePath status\tree.txt
@@ -59,11 +60,11 @@ jobs:
       - name: save artifacts
         uses: actions/upload-artifact@v3
         with:
-          name: ReaderConsole- ${{ env.RUNNER_OS }} - ${{ env.RUNNER_ARCH }} - ${{ env.GITHUB_RUN_NUMBER }}  
+          name: ${{ env.COMET_ARTIFACT_NAME }}
           path: 'Iot Apps/src/Comet.Apps.ReaderConsole/bin/debug/net7.0/'
      
-      #- name: Status
-      #  run: |
-      #    Get-ChildItem -Path Env:
-      #    dotnet --info
-      #    tree
+      - name: Status 2
+        run: |
+          Get-ChildItem -Path Env:
+          dotnet --info
+          tree
